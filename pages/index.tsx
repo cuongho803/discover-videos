@@ -5,12 +5,35 @@ import styles from '@/styles/Home.module.css'
 import Banner from "@/components/banner/banner";
 import NavBar from "@/components/nav/navbar"
 import Card from "@/components/card/card"
+import SectionCards from "@/components/card/section-cards";
 
 const inter = Inter({subsets: ['latin']})
 
 export default function Home() {
-    return (
+    const disneyVideos = [
+        {
+            imgUrl: '/static/clifford.webp',
+            id: 1
+        },
+        {
+            imgUrl: '/static/clifford.webp',
+            id: 2
+        },
+        {
+            imgUrl: '/static/clifford.webp',
+            id: 3
+        },
+        {
+            imgUrl: '/static/clifford.webp',
+            id: 4
+        },
+        {
+            imgUrl: '/static/clifford.webp',
+            id: 5
+        },
 
+    ];
+    return (
         <div className={styles.container}>
             <Head>
                 <title>Netflix</title>
@@ -25,16 +48,13 @@ export default function Home() {
                     subTitle="a very cute dog"
                     imgUrl="/static/clifford.webp"
                 />
-
-                <Card imgUrl='/static/clifford.webp'
-                      size="large"
-                />
-                <Card imgUrl='/static/clifford.webp'
-                      size="medium"
-                />
-                <Card imgUrl='/static/clifford.webp'
-                      size="small"
-                />
+                <div className={styles.sectionWrapper}>
+                    <SectionCards
+                        title="Disney"
+                        videos={disneyVideos}
+                        size="large"
+                    />
+                </div>
                 {/*<div className={styles.sectionWrapper}>*/}
                 {/*    <SectionCards title="Disney" videos={disneyVideos} size="large"/>*/}
                 {/*    <SectionCards*/}
