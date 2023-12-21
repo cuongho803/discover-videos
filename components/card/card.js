@@ -1,8 +1,8 @@
-import { useState } from "react";
+import {useState} from "react";
 import Image from "next/image";
 
 import cls from "classnames";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 
 import styles from "./card.module.css";
 
@@ -27,12 +27,14 @@ const Card = (props) => {
         );
     };
 
-    const scale = id === 0 ? { scaleY: 1.1 } : { scale: 1.1 };
+    const scale = id === 0 ? {scaleY: 1.1} : {scale: 1.1};
 
     const shouldHover = shouldScale && {
-        whileHover: { ...scale },
+        whileHover: {...scale},
     };
-
+    console.log({
+        shouldHover: shouldHover
+    })
     return (
         <div className={styles.container}>
             <motion.div
