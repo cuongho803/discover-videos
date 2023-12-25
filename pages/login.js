@@ -11,6 +11,19 @@ const Login = () => {
     const [userMsg, setUserMsg] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+
+    useEffect(() => {
+        const handleComplete = () => {
+            setIsLoading(false);
+        };
+        router.events.on("routeChangeComplete", handleComplete);
+        router.events.on("routeChangeError", handleComplete);
+
+        return () => {
+            router.events.off("routeChangeComplete", handleComplete);
+            router.events.off("routeChangeError", handleComplete);
+        };
+    }, [router]);
     const handleOnChangeEmail = (e) => {
         setUserMsg("");
         const email = e.target.value;
@@ -25,9 +38,6 @@ const Login = () => {
                 const didToken = await magic.auth.loginWithMagicLink({
                     email,
                 });
-                console.log({
-                    didToken: didToken
-                })
                 if (didToken) {
                     // const response = await fetch("/api/login", {
                     //     method: "POST",

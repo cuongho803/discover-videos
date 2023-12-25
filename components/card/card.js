@@ -32,9 +32,7 @@ const Card = (props) => {
     const shouldHover = shouldScale && {
         whileHover: {...scale},
     };
-    console.log({
-        shouldHover: shouldHover
-    })
+
     return (
         <div className={styles.container}>
             <motion.div

@@ -3,14 +3,26 @@ import {useRouter} from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import {useEffect, useState} from "react";
+import {magic} from "@/lib/magic-client";
 
 const NavBar = (props) => {
-
     const [username, setUsername] = useState(props.userName || "");
     const [showDropdown, setShowDropdown] = useState(false);
     const [didToken, setDidToken] = useState("");
     const router = useRouter();
-    const {userName} = props;
+    useEffect(() => {
+        async function getUserName() {
+            let userName = '';
+            try {
+                const {email, publicAddress} = await magic.user.getMetadata();
+                setUsername(email);
+            } catch (e) {
+                setUsername('');
+            }
+        }
+
+        getUserName();
+    }, [router])
     //  setUsername(username);
     const handleOnClickHome = (e) => {
         e.preventDefault();
@@ -24,27 +36,17 @@ const NavBar = (props) => {
 
     const handleShowDropdown = (e) => {
         e.preventDefault();
-        console.log("!231231");
         setShowDropdown(!showDropdown);
     };
 
     const handleSignout = async (e) => {
         e.preventDefault();
-        console.log("Sign Out");
-        /*  try {
-              const response = await fetch("/api/logout", {
-                  method: "POST",
-                  headers: {
-                      Authorization: `Bearer ${didToken}`,
-                      "Content-Type": "application/json",
-                  },
-              });
-
-              const res = await response.json();
-          } catch (error) {
-              console.error("Error logging out", error);
-              router.push("/login");
-          }*/
+        try {
+            await magic.user.logout();
+            router.push('/login');
+        } catch (error) {
+            router.push('/login');
+        }
     };
 
     return (
@@ -83,7 +85,7 @@ const NavBar = (props) => {
                         {showDropdown && (
                             <div className={styles.navDropdown}>
                                 <div>
-                                    <a className={styles.linkName}>
+                                    <a className={styles.linkName} onClick={handleSignout}>
                                         Sign out
                                     </a>
                                     <div className={styles.lineWrapper}></div>
